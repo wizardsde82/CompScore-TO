@@ -1,0 +1,41 @@
+[build-system]
+requires = ["hatchling==1.27.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "compscore-to"
+version = "1.0.0"
+description = "Compositional diffusion for patient-matched orthopedic topology optimization"
+requires-python = ">=3.11"
+dependencies = [
+  "torch==2.6.0",
+  "numpy==2.2.3",
+  "scipy==1.15.2",
+  "nibabel==5.3.2",
+  "pydicom==3.0.1",
+  "omegaconf==2.3.0",
+  "PyYAML==6.0.2",
+  "h5py==3.13.0",
+]
+
+[project.scripts]
+compscore-train = "compscore_to.entrypoints.train:main"
+compscore-evaluate = "compscore_to.entrypoints.evaluate:main"
+compscore-prepare = "compscore_to.entrypoints.prepare:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["code/compscore_to"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+packages = ["compscore_to"]
+mypy_path = "code"
+

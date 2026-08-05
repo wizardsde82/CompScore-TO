@@ -1,0 +1,63 @@
+seed: 2026
+output_dir: runs/main
+data:
+  root: data/processed
+  grid_size: 64
+  spacing_mm: 1.0
+  train_fraction: 0.7
+  validation_fraction: 0.1
+  load_cases: 8
+  volume_fractions: [0.2, 0.3, 0.4, 0.5]
+model:
+  latent_channels: 4
+  anatomy_channels: 256
+  anatomy_tokens: 512
+  base_channels: 96
+  channel_multipliers: [1, 2, 4, 4]
+  attention_levels: [3]
+  message_passing_layers: 5
+vae:
+  epochs: 120
+  batch_size: 64
+  learning_rate: 0.0002
+  weight_decay: 0.01
+  kl_weight: 0.0001
+  gradient_clip: 1.0
+  restart_epochs: [40, 80]
+diffusion:
+  iterations: 200000
+  batch_size: 48
+  learning_rate: 0.0003
+  weight_decay: 0.001
+  warmup_steps: 2000
+  ema_decay: 0.9999
+  p_mean: -1.2
+  p_std: 1.2
+  sigma_min: 0.002
+  sigma_max: 80.0
+  sigma_data: 0.5
+surrogate:
+  epochs: 80
+  batch_size: 32
+  learning_rate: 0.0003
+  weight_decay: 0.001
+  stress_weight: 0.5
+  manufacturing_weight: 0.3
+guidance:
+  compliance: 5.0
+  stress: 3.0
+  manufacturing: 2.0
+  steps: 50
+physics:
+  simp_penalty: 3.0
+  titanium_modulus_gpa: 110.0
+  volume_fraction: 0.35
+  filter_radius_voxels: 2.0
+  minimum_feature_mm: 0.3
+  maximum_overhang_degrees: 45.0
+  peri_implant_shell_mm: 2.0
+statistics:
+  seeds: 5
+  bootstrap_resamples: 10000
+  false_discovery_rate: 0.05
+
